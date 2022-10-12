@@ -23,9 +23,14 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-rongcloud = RongCloud::new(
+rongcloud = RongCloud::Client::new(
   app_key: '',
   app_secret: '',
+  host: 'api-us.ronghub.com'
+)
+
+rongcloud.api.user.get_token(
+  userId: 'nutzer'
 )
 ```
 
