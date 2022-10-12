@@ -13,7 +13,10 @@ gem "rubocop", "~> 1.29"
 gem "standard", "~> 1.12"
 
 # test
+gem "dotenv", "~> 2.7"
 gem "rspec", "~> 3.0"
+gem "vcr", "~> 6.0"
+gem "webmock", "~> 3.18"
 
 # doc
 gem "yard", "~> 0.9"

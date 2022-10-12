@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api-cn.ronghub.com/push.json
+    body:
+      encoding: UTF-8
+      string: '{"platform":["ios","android"],"fromuserid":"nutzer","audience":{"is_to_all":true},"message":{"content":"{\"content\":\"content,\",\"extra\":\"extra\"}","objectName":"RC:TxtMsg"},"notification":{"alert":"alert"}}'
+    headers:
+      Rc-App-Key:
+      - "<RONGCLOUD_APP_KEY>"
+      Rc-Nonce:
+      - 6JdWufDkiLqyeRU5
+      Rc-Timestamp:
+      - '1665601025006'
+      Rc-Signature:
+      - 23f2d9ff8d6c9fb6cca5469d187a0924e77e80c5
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - api-cn.ronghub.com
+      User-Agent:
+      - http.rb/5.1.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 12 Oct 2022 18:57:06 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Vary:
+      - Accept-Encoding
+      - Accept-Encoding
+      - Accept-Encoding
+      - Accept-Encoding
+      X-Request-Id:
+      - cbb8e75b7b55b22a8c6ae6db6edfafcc
+    body:
+      encoding: UTF-8
+      string: '{"code":200,"id":"C3PM-7BKO-8QIO-D5U5"}'
+  recorded_at: Wed, 12 Oct 2022 18:57:05 GMT
+recorded_with: VCR 6.1.0

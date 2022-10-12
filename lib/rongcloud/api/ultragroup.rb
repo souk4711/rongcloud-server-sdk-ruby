@@ -12,7 +12,7 @@ module RongCloud
       member "/ultragroup/channel/create.json"
       member "/ultragroup/channel/del.json"
       member "/ultragroup/channel/get.json"
-      member "/ultragroup/channel/private/users/add.json	"
+      member "/ultragroup/channel/private/users/add.json"
       member "/ultragroup/channel/private/users/del.json"
       member "/ultragroup/channel/private/users/get.json"
       member "/ultragroup/channel/type/change.json"
