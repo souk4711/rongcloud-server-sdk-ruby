@@ -23,7 +23,9 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-rongcloud = RongCloud::Client::new(
+require "rongcloud"
+
+rongcloud = RongCloud::Client.new(
   app_key: ENV["RONGCLOUD_APP_KEY"],
   app_secret: ENV["RONGCLOUD_APP_SECRET"],
   host: "api-cn.ronghub.com"
@@ -49,13 +51,13 @@ The API name is converted from the corresponding URI, E.g.
 ### Timeout
 
 ```ruby
-rongcloud = RongCloud::Client::new(
+rongcloud = RongCloud::Client.new(
   app_key: ENV["RONGCLOUD_APP_KEY"],
   app_secret: ENV["RONGCLOUD_APP_SECRET"],
   host: "api-cn.ronghub.com",
   http: {
     timeout_class: HTTP::Timeout::Global,
-    timeout_options: {global_timeout: 2}
+    timeout_options: {global_timeout: 5}
   }
 )
 ```
@@ -63,7 +65,7 @@ rongcloud = RongCloud::Client::new(
 ### Logging
 
 ```ruby
-rongcloud = RongCloud::Client::new(
+rongcloud = RongCloud::Client.new(
   app_key: ENV["RONGCLOUD_APP_KEY"],
   app_secret: ENV["RONGCLOUD_APP_SECRET"],
   host: "api-cn.ronghub.com",
@@ -72,6 +74,17 @@ rongcloud = RongCloud::Client::new(
       logging: {logger: Logger.new($stdout)}
     }
   }
+)
+```
+
+### Signature Verify
+
+```ruby
+verified = RongCloud::Signer.verify?(
+  app_secret: ENV["RONGCLOUD_APP_SECRET"],
+  nonce: params["nonce"],
+  timestamp: params["timestamp"],
+  signature: params["signature"]
 )
 ```
 

@@ -222,7 +222,7 @@ RSpec.describe RongCloud::Client do
     end
   end
 
-  describe "http options" do
+  describe "HTTP options" do
     it "timeout" do
       allow(TCPSocket).to receive(:open) { sleep 2.5 }
       client = described_class.new(
