@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rongcloud-server-sdk (1.0.0)
+    rongcloud-server-sdk (1.0.1)
       http (~> 5.0)
 
 GEM
