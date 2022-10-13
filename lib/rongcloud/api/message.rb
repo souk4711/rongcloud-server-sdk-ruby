@@ -8,8 +8,8 @@ module RongCloud
 
       member "/message/chatroom/broadcast.json"
       member "/message/chatroom/publish.json"
-      member "/message/private/publish.json", format: :json
-      member "/message/private/publish_template.json"
+      member "/message/private/publish.json"
+      member "/message/private/publish_template.json", format: :json
       member "/message/group/publish.json"
       member "/message/online/broadcast.json"
       member "/message/system/publish.json"
