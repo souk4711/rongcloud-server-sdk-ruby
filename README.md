@@ -34,6 +34,47 @@ rongcloud.api.user.gettoken(
 )
 ```
 
+The API name is converted from the corresponding URI, E.g.
+
+| URI                        | Call use                     |
+|----------------------------|------------------------------|
+| /user/getToken.json        | api.user.gettoken(...)       |
+| /user/token/expire.json    | api.user.token\_expire(...)  |
+| /push.json                 | api.push.(...)               |
+| /push/custom.json          | api.push.custom(...)         |
+| /stat/getDayPushData.json  | api.stat.getdaypushdata(...) |
+| /stat/getPushIdData.json   | api.stat.getpushiddata(...)  |
+| ...                        | ...                          |
+
+### Timeout
+
+```ruby
+rongcloud = RongCloud::Client::new(
+  app_key: ENV["RONGCLOUD_APP_KEY"],
+  app_secret: ENV["RONGCLOUD_APP_SECRET"],
+  host: "api-cn.ronghub.com",
+  http: {
+    timeout_class: HTTP::Timeout::Global,
+    timeout_options: {global_timeout: 2}
+  }
+)
+```
+
+### Logging
+
+```ruby
+rongcloud = RongCloud::Client::new(
+  app_key: ENV["RONGCLOUD_APP_KEY"],
+  app_secret: ENV["RONGCLOUD_APP_SECRET"],
+  host: "api-cn.ronghub.com",
+  http: {
+    features: {
+      logging: {logger: Logger.new($stdout)}
+    }
+  }
+)
+```
+
 
 ## Development
 

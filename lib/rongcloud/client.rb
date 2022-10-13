@@ -9,7 +9,11 @@ module RongCloud
     def initialize(options)
       @app_key = options.fetch(:app_key)
       @app_secret = options.fetch(:app_secret)
-      @http = Http.new(self, host: options.fetch(:host))
+      @http = Http.new(
+        self,
+        host: options.fetch(:host),
+        options: options[:http] || {}
+      )
     end
 
     def api

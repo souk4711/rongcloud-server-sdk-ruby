@@ -3,6 +3,7 @@ module RongCloud
     def initialize(client, options)
       @client = client
       @host = options.fetch(:host)
+      @options = options.fetch(:options)
     end
 
     def post(path, options)
@@ -28,7 +29,7 @@ module RongCloud
       }
 
       begin
-        response = HTTP.request(verb, uri, options)
+        response = http(@options).request(verb, uri, options)
       rescue HTTP::Error => e
         raise RongCloud::Exceptions::HttpError, e.message
       end
@@ -44,14 +45,18 @@ module RongCloud
       end
     end
 
+    def uri_for(path)
+      uri_options = {scheme: "https", host: @host, path: path}
+      Addressable::URI.new(uri_options)
+    end
+
     def random_str(str_size)
       chars = [*("a".."z"), *("A".."Z"), *("0".."9")]
       chars.sample(str_size).join
     end
 
-    def uri_for(path)
-      uri_options = {scheme: "https", host: @host, path: path}
-      Addressable::URI.new(uri_options)
+    def http(options)
+      HTTP::Client.new(HTTP::Options.new(options))
     end
 
     def parse_response(response)

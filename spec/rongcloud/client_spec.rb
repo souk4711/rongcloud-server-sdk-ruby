@@ -190,8 +190,8 @@ RSpec.describe RongCloud::Client do
     end
   end
 
-  context "HTTP interactions" do
-    it "#user", vcr: true do
+  describe "HTTP interactions", :vcr do
+    it "#user" do
       expect {
         api.user.gettoken({})
       }.to raise_error(RongCloud::Exceptions::APIError, /The parameter userId is required/)
@@ -205,7 +205,7 @@ RSpec.describe RongCloud::Client do
       expect(data["userName"]).to eq("John Doe")
     end
 
-    it "#push", vcr: true do
+    it "#push" do
       data = api.push.call(platform: ["ios", "android"],
         fromuserid: "nutzer",
         audience: {
@@ -219,6 +219,40 @@ RSpec.describe RongCloud::Client do
           alert: "alert"
         })
       expect(data["code"]).to eq(200)
+    end
+  end
+
+  describe "http options" do
+    it "timeout" do
+      allow(TCPSocket).to receive(:open) { sleep 2.5 }
+      client = described_class.new(
+        app_key: ENV["RONGCLOUD_APP_KEY"],
+        app_secret: ENV["RONGCLOUD_APP_SECRET"],
+        host: "api-cn.ronghub.com",
+        http: {
+          timeout_class: HTTP::Timeout::Global,
+          timeout_options: {global_timeout: 2}
+        }
+      )
+      expect {
+        client.api.user.gettoken(userId: "nutzer", name: "John Doe")
+      }.to raise_error(RongCloud::Exceptions::HttpError, /execution expired/)
+    end
+
+    it "logging", :vcr do
+      strio = StringIO.new
+      client = described_class.new(
+        app_key: ENV["RONGCLOUD_APP_KEY"],
+        app_secret: ENV["RONGCLOUD_APP_SECRET"],
+        host: "api-cn.ronghub.com",
+        http: {
+          features: {
+            logging: {logger: Logger.new(strio)}
+          }
+        }
+      )
+      client.api.user.gettoken(userId: "nutzer", name: "John Doe")
+      expect(strio.string).to include("> POST https://api-cn.ronghub.com/user/getToken.json")
     end
   end
 end
