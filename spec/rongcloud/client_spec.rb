@@ -169,6 +169,9 @@ RSpec.describe RongCloud::Client do
       it { expect(api.user).to respond_to(:token_expire) }
       it { expect(api.user).to respond_to(:info) }
       it { expect(api.user).to respond_to(:refresh) }
+      it { expect(api.user).to respond_to(:tag_set) }
+      it { expect(api.user).to respond_to(:tag_batch_set) }
+      it { expect(api.user).to respond_to(:tags_get) }
       it { expect(api.user).to respond_to(:block) }
       it { expect(api.user).to respond_to(:block_query) }
       it { expect(api.user).to respond_to(:unblock) }

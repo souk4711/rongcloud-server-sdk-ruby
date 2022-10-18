@@ -7,6 +7,9 @@ module RongCloud
       member "/user/token/expire.json"
       member "/user/info.json"
       member "/user/refresh.json"
+      member "/user/tag/set.json", format: :json
+      member "/user/tag/batch/set.json", format: :json
+      member "/user/tags/get.json"
 
       member "/user/block.json"
       member "/user/block/query.json"
