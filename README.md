@@ -77,6 +77,34 @@ rongcloud = RongCloud::Client.new(
 )
 ```
 
+### Request ID
+
+```ruby
+class RequestID < HTTP::Feature
+  def wrap_request(req)
+    req.headers["X-Request-ID"] = make_request_id
+    req
+  end
+
+  private
+
+  def make_request_id
+    Thread.current[:request_id] || SecureRandom.uuid
+  end
+end
+
+rongcloud = RongCloud::Client.new(
+  app_key: ENV["RONGCLOUD_APP_KEY"],
+  app_secret: ENV["RONGCLOUD_APP_SECRET"],
+  host: "api-cn.ronghub.com",
+  http: {
+    features: {
+      request_id: RequestID.new
+    }
+  }
+)
+```
+
 ### Signature Verify
 
 ```ruby

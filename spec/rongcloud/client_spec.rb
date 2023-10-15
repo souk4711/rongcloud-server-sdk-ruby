@@ -257,5 +257,37 @@ RSpec.describe RongCloud::Client do
       client.api.user.gettoken(userId: "nutzer", name: "John Doe")
       expect(strio.string).to include("> POST https://api-cn.ronghub.com/user/getToken.json")
     end
+
+    it "request_id", :vcr do
+      request_id_klass = Class.new(HTTP::Feature) do
+        def wrap_request(req)
+          req.headers["X-Request-ID"] = make_request_id
+          req
+        end
+
+        private
+
+        def make_request_id
+          Thread.current[:request_id] || SecureRandom.uuid
+        end
+      end
+
+      strio = StringIO.new
+      client = described_class.new(
+        app_key: ENV["RONGCLOUD_APP_KEY"],
+        app_secret: ENV["RONGCLOUD_APP_SECRET"],
+        host: "api-cn.ronghub.com",
+        http: {
+          features: {
+            request_id: request_id_klass.new,
+            logging: {logger: Logger.new(strio)}
+          }
+        }
+      )
+
+      Thread.current[:request_id] = "f0c525bb-4bd7-4e7a-980c-d1dfd24923ed"
+      client.api.user.gettoken(userId: "nutzer", name: "John Doe")
+      expect(strio.string).to include("X-Request-ID: f0c525bb-4bd7-4e7a-980c-d1dfd24923ed")
+    end
   end
 end

@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api-cn.ronghub.com/user/getToken.json
+    body:
+      encoding: UTF-8
+      string: userId=nutzer&name=John+Doe
+    headers:
+      Rc-App-Key:
+      - "<RONGCLOUD_APP_KEY>"
+      Rc-Nonce:
+      - iAWsx1FnXzbw7uEo
+      Rc-Timestamp:
+      - '1697351338663'
+      Rc-Signature:
+      - 3b671aa26876dcd0b2ee0b9d8d2761378648c070
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api-cn.ronghub.com
+      User-Agent:
+      - http.rb/5.1.0
+      X-Request-Id:
+      - 2240ce89-d1e3-4252-84ce-372725eb0970
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      X-Request-Id:
+      - 2240ce89-d1e3-4252-84ce-372725eb0970
+      Date:
+      - Sun, 15 Oct 2023 06:28:57 GMT
+      Server:
+      - APISIX
+      X-Apisix-Upstream-Status:
+      - '200'
+    body:
+      encoding: UTF-8
+      string: '{"code":200,"userId":"nutzer","token":"35Ufb55yCBsDTweUTPFMpDDFDOTp/h6tmHhHEWfdYtk=@5r3v.cn.rongnav.com;5r3v.cn.rongcfg.com"}'
+  recorded_at: Sun, 15 Oct 2023 06:28:58 GMT
+recorded_with: VCR 6.1.0
