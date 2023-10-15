@@ -290,4 +290,72 @@ RSpec.describe RongCloud::Client do
       expect(strio.string).to include("X-Request-ID: f0c525bb-4bd7-4e7a-980c-d1dfd24923ed")
     end
   end
+
+  describe "HTTP options on specified api" do
+    it "timeout" do
+      allow(TCPSocket).to receive(:open) { sleep 2.5 }
+      client = described_class.new(
+        app_key: ENV["RONGCLOUD_APP_KEY"],
+        app_secret: ENV["RONGCLOUD_APP_SECRET"],
+        host: "api-cn.ronghub.com",
+        http: {
+          timeout_class: HTTP::Timeout::Global,
+          timeout_options: {global_timeout: 4}
+        }
+      )
+      expect {
+        client.api.user.gettoken({
+          userId: "nutzer", name: "John Doe"
+        }, {
+          timeout_class: HTTP::Timeout::Global,
+          timeout_options: {global_timeout: 2}
+        })
+      }.to raise_error(RongCloud::Exceptions::HttpError, /execution expired/)
+    end
+
+    it "logging" do
+      strio = StringIO.new
+      client = described_class.new(
+        app_key: ENV["RONGCLOUD_APP_KEY"],
+        app_secret: ENV["RONGCLOUD_APP_SECRET"],
+        host: "api-cn.ronghub.com",
+        http: {
+          features: {
+            logging: {logger: Logger.new(strio)}
+          }
+        }
+      )
+      client.api.user.gettoken({
+        userId: "nutzer", name: "John Doe"
+      }, {
+        features: {
+          logging: {logger: HTTP::Features::Logging::NullLogger.new}
+        }
+      })
+      expect(strio.string).to eq("")
+    end
+
+    it "request_id", :vcr do
+      strio = StringIO.new
+      client = described_class.new(
+        app_key: ENV["RONGCLOUD_APP_KEY"],
+        app_secret: ENV["RONGCLOUD_APP_SECRET"],
+        host: "api-cn.ronghub.com",
+        http: {
+          features: {
+            logging: {logger: Logger.new(strio)}
+          }
+        }
+      )
+
+      client.api.user.gettoken({
+        userId: "nutzer", name: "John Doe"
+      }, {
+        headers: {
+          "X-Request-ID" => "f0c525bb-4bd7-4e7a-980c-d1dfd24923ed"
+        }
+      })
+      expect(strio.string).to include("X-Request-ID: f0c525bb-4bd7-4e7a-980c-d1dfd24923ed")
+    end
+  end
 end

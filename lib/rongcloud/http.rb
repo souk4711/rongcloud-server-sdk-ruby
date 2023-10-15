@@ -17,7 +17,7 @@ module RongCloud
 
       nonce = random_str(16)
       timestamp = (Time.now.to_f * 1000).to_i.to_s
-      options[:headers] = {
+      options[:headers] = (options[:headers] || {}).merge({
         "RC-App-Key" => @client.app_key,
         "RC-Nonce" => nonce,
         "RC-Timestamp" => timestamp,
@@ -26,7 +26,7 @@ module RongCloud
           nonce: nonce,
           timestamp: timestamp
         })
-      }
+      })
 
       begin
         response = http(@options).request(verb, uri, options)

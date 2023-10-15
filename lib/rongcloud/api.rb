@@ -32,8 +32,8 @@ module RongCloud
           end
 
           format = options[:format] || :form
-          define_method(meth) do |payload|
-            client.post(url, format => payload)
+          define_method(meth) do |payload, opts = {}|
+            client.post(url, opts.merge(format => payload))
           end
         end
       end
