@@ -313,7 +313,7 @@ RSpec.describe RongCloud::Client do
       }.to raise_error(RongCloud::Exceptions::HttpError, /execution expired/)
     end
 
-    it "logging" do
+    it "logging", :vcr do
       strio = StringIO.new
       client = described_class.new(
         app_key: ENV["RONGCLOUD_APP_KEY"],

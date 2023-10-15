@@ -61,8 +61,12 @@ rongcloud = RongCloud::Client.new(
   }
 )
 
-# Use the secondary parameter to override global HTTP options in
-# a specific HTTP request.
+# Use the global HTTP timeout options.
+rongcloud.api.user.gettoken({
+  userId: "nutzer", name: "John Doe"
+})
+
+# Override global HTTP timeout options in a specific HTTP request.
 rongcloud.api.user.gettoken({
   userId: "nutzer", name: "John Doe"
 }, {
