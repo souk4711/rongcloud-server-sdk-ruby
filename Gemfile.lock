@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rongcloud-server-sdk (1.0.2)
+    rongcloud-server-sdk (1.1.0)
       http (~> 5.0)
 
 GEM
@@ -17,12 +17,12 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.8.1)
-    ffi (1.15.5)
+    ffi (1.16.3)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
     hashdiff (1.0.1)
-    http (5.1.0)
+    http (5.1.1)
       addressable (~> 2.8)
       http-cookie (~> 1.0)
       http-form_data (~> 2.2)
