@@ -118,6 +118,24 @@ rongcloud = RongCloud::Client.new(
 )
 ```
 
+### Thread Safe
+
+```ruby
+rongcloud = RongCloud::Client.new(
+  app_key: ENV["RONGCLOUD_APP_KEY"],
+  app_secret: ENV["RONGCLOUD_APP_SECRET"],
+  host: "api-cn.ronghub.com"
+)
+
+# RongCloud::Client is thread-safe.
+thrs = []
+thrs << Thread.new { rongcloud.api.user.gettoken(userId: 'nutzer') }
+thrs << Thread.new { rongcloud.api.user.gettoken(userId: 'nutzer') }
+thrs << Thread.new { rongcloud.api.user.gettoken(userId: 'nutzer') }
+thrs << Thread.new { rongcloud.api.user.gettoken(userId: 'nutzer') }
+thrs.each(&:join)
+```
+
 ### Signature Verify
 
 ```ruby
